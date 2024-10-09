@@ -10,7 +10,7 @@ public interface ICategoryDao {
 
 	List<Category> findAll(int page, int pagesize);
 
-	List<Category> findByCategoryname(String catname);
+	Category findByCategoryname(String catname) throws Exception;
 
 	List<Category> findAll();
 
@@ -21,5 +21,7 @@ public interface ICategoryDao {
 	void update(Category category);
 
 	void insert(Category category);
+
+	
 	
 }

@@ -21,9 +21,10 @@ public class CategoryService implements ICategoryService{
 	}
 
 	@Override
-	public List<Category> findByCategoryname(String catname) {
+	public Category findByCategoryname(String catname) throws Exception {
 		return cateDao.findByCategoryname(catname);
 	}
+	
 
 	@Override
 	public List<Category> findAll() {
@@ -47,7 +48,14 @@ public class CategoryService implements ICategoryService{
 
 	@Override
 	public void insert(Category category) {
-		cateDao.insert(category);		
+		/*Category cate;
+		try {
+			cate = this.findByCategoryname(category.getCategoryname());
+			if (cate == null)
+				cateDao.insert(category);	
+		}catch (Exception e){
+			e.printStackTrace();
+		}*/
+		cateDao.insert(category);
 	}
-	
 }

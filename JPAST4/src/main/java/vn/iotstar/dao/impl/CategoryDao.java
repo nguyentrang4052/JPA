@@ -103,12 +103,21 @@ public class CategoryDao implements ICategoryDao{
 	}
 	
 	@Override
-	public List<Category> findByCategoryname(String catname){
+	public Category findByCategoryname (String catname) throws Exception{
 		EntityManager enma = JpaConfig.getEntityManager();
 		String jpql = "SELECT c FROM Category c WHERE c.catename like :catname"; //entity
-		TypedQuery<Category> query = enma.createQuery(jpql, Category.class);
-		query.setParameter("catename","%" + catname + "%");
-		return query.getResultList();
+		try {
+			TypedQuery<Category> query = enma.createQuery(jpql, Category.class);
+			query.setParameter("catename","%" + catname + "%");
+			Category category = query.getSingleResult();
+			if (category == null) {
+				throw new Exception ("Category Name da ton tai");
+			}
+			return category;
+		}finally {
+			enma.close();
+		}
+		
 	}
 	
 	@Override
