@@ -64,7 +64,6 @@ public class CategoryController extends HttpServlet {
 
 				e.printStackTrace();
 			}
-
 		}
 	}
 
@@ -117,9 +116,7 @@ public class CategoryController extends HttpServlet {
 			cateService.insert(category);
 			resp.sendRedirect(req.getContextPath() + "/admin/categories");
 
-		} else if (url.contains("/admin/category/update"))
-
-		{
+		} else if (url.contains("/admin/category/update")) {
 
 			int categoryid = Integer.parseInt(req.getParameter("categoryid"));
 			String categoryname = req.getParameter("categoryname");
@@ -147,9 +144,9 @@ public class CategoryController extends HttpServlet {
 
 				if (part.getSize() > 0) {
 
-					if (!category.getImages().substring(0, 5).equals("https")) {
+				/*if (!category.getImages().substring(0,5).equals("https")) {
 						deleteFile(uploadPath + "\\" + fileold);
-					}
+					}*/
 
 					String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
 

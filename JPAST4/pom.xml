@@ -103,13 +103,24 @@
 			<scope>provided</scope>
 		</dependency>
 
-
-
-
 		<dependency>
 			<groupId>vn.iostar</groupId>
 			<artifactId>HelloWorld</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+			<!-- https://mvnrepository.com/artifact/org.sitemesh/sitemesh -->
+
+		<dependency>
+			<groupId>org.sitemesh</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		
+				<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
 		</dependency>
 	</dependencies>
 	<build>

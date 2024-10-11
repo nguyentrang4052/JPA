@@ -2,8 +2,9 @@
 	pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
 <a href="${pageContext.request.contextPath }/admin/video/insert">Add
+	Video</a><br>
+<a href="${pageContext.request.contextPath }/admin/video/search">Search
 	Video</a>
-
 <table border="1" width=100%>
 	<tr>
 		<th>STT</th>
@@ -17,6 +18,9 @@
 		<th>Action</th>
 	</tr>
 	<tr>
+	<c:if test="${alert != null}">
+			<h3 class="alert-alertdanger">${alert}</h3>
+		</c:if>
 		<c:forEach items="${listvideo}" var="video" varStatus="STT">
 			<tr>
 				<td>${STT.index+1 }</td>

@@ -100,20 +100,12 @@ public class VideoDao implements IVideoDao{
 	}
 	
 	@Override
-	public Video findByVideoname (String videoname) throws Exception{
+	public List<Video> findByVideoname (String videoname){
 		EntityManager enma = JpaConfig.getEntityManager();
-		String jpql = "SELECT v FROM Video v WHERE v.videoname like :videoname"; //entity
-		try {
-			TypedQuery<Video> query = enma.createQuery(jpql, Video.class);
-			query.setParameter("videoname","%" + videoname + "%");
-			Video video = query.getSingleResult();
-			if (video == null) {
-				throw new Exception ("Video Name da ton tai");
-			}
-			return video;
-		}finally {
-			enma.close();
-		}		
+		String jpql = "SELECT v FROM Video v WHERE v.title LIKE :videoname"; //entity
+		TypedQuery<Video> query = enma.createQuery(jpql, Video.class);
+		query.setParameter("videoname","%" + videoname + "%");
+		return query.getResultList();
 	}
 	
 	@Override

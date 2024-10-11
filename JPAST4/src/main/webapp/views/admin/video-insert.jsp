@@ -8,7 +8,7 @@
 	<label for="title">Video title:</label><br>
  	<input type="text" id="title" name="title" value=""><br> 
  	<label for="poster">Poster:</label><br>
-	<img id="poster" height="150" width="200" src="" /> <input
+	<img id="imagess" height="150" width="200" src="" /> <input
 		type="file" onchange="chooseFile(this)" id="poster" name="poster"
 		value=""><br>
 		

@@ -21,7 +21,7 @@ public class VideoService implements IVideoService{
 	}
 
 	@Override
-	public Video findByVideoname(String videoname) throws Exception {
+	public List<Video> findByVideoname(String videoname){
 		return videoDao.findByVideoname(videoname);
 	}
 

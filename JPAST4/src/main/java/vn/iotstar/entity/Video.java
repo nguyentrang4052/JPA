@@ -29,7 +29,6 @@ public class Video implements Serializable{
 	private int videoid;
 	
 	@Column(name="Title", columnDefinition ="NVARCHAR(255) NULL")
-	@NotEmpty(message = "Khong duoc phep rong")
 	private String title;
 	
 	@Column(name="Poster", columnDefinition ="NVARCHAR(255) NULL")

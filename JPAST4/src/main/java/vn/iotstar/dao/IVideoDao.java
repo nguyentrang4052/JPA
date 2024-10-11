@@ -10,7 +10,7 @@ public interface IVideoDao {
 
 	List<Video> findAll(int page, int pagesize);
 
-	Video findByVideoname(String videoname) throws Exception;
+	List<Video> findByVideoname(String videoname);
 
 	List<Video> findAll();
 
