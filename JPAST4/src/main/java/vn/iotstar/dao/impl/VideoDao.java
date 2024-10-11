@@ -1,5 +1,6 @@
 package vn.iotstar.dao.impl;
 
+
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
@@ -7,14 +8,12 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import vn.iotstar.configs.JpaConfig;
-import vn.iotstar.dao.ICategoryDao;
-import vn.iotstar.entity.Category;
+import vn.iotstar.dao.IVideoDao;
+import vn.iotstar.entity.Video;
 
-public class CategoryDao implements ICategoryDao{
+public class VideoDao implements IVideoDao{
 	@Override
-	public void insert(Category category) {
-
-		//mo ket noi
+	public void insert(Video video) {
 		EntityManager enma = JpaConfig.getEntityManager();
 		EntityTransaction trans = enma.getTransaction();
 
@@ -22,7 +21,7 @@ public class CategoryDao implements ICategoryDao{
 
 			trans.begin();
 			// goi phuong thuc de insert, update, delete
-			enma.persist(category);// insert vao bang
+			enma.persist(video);// insert vao bang
 			trans.commit();
 
 		} catch (Exception e) {
@@ -34,10 +33,9 @@ public class CategoryDao implements ICategoryDao{
 			enma.close();
 		}
 	}
-
+	
 	@Override
-	public void update(Category category) {
-
+	public void update(Video video) {
 		EntityManager enma = JpaConfig.getEntityManager();
 		EntityTransaction trans = enma.getTransaction();
 
@@ -45,7 +43,7 @@ public class CategoryDao implements ICategoryDao{
 
 			trans.begin();
 			// goi phuong thuc de insert, update, delete
-			enma.merge(category);
+			enma.merge(video);
 			trans.commit();
 
 		} catch (Exception e) {
@@ -57,10 +55,9 @@ public class CategoryDao implements ICategoryDao{
 			enma.close();
 		}
 	}
-
+	
 	@Override
-	public void delete(int cateid) throws Exception {
-
+	public void delete(int videoid) throws Exception {
 		EntityManager enma = JpaConfig.getEntityManager();
 		EntityTransaction trans = enma.getTransaction();
 
@@ -68,9 +65,9 @@ public class CategoryDao implements ICategoryDao{
 
 			trans.begin();
 			// goi phuong thuc de insert, update, delete
-			Category category = enma.find(Category.class,cateid);
-			if (category != null) {
-				enma.remove(category);
+			Video video = enma.find(Video.class, videoid);
+			if (video != null) {
+				enma.remove(video);
 			}else {
 				throw new Exception("Khong tim thay");
 			}
@@ -88,42 +85,41 @@ public class CategoryDao implements ICategoryDao{
 	}
 	
 	@Override
-	public Category findById(int cateid){
+	public Video findById(int videoid){
 		EntityManager enma = JpaConfig.getEntityManager();
 		//khoi tao
-		Category category = enma.find(Category.class, cateid);
-		return category;
+		Video video = enma.find(Video.class, videoid);
+		return video;
 	}
 	
 	@Override
-	public List<Category>findAll(){
+	public List<Video> findAll(){
 		EntityManager enma = JpaConfig.getEntityManager();
-		TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
+		TypedQuery<Video> query = enma.createNamedQuery(("Video.findAll"), Video.class);
 		return query.getResultList();
 	}
 	
 	@Override
-	public Category findByCategoryname (String catname) throws Exception{
+	public Video findByVideoname (String videoname) throws Exception{
 		EntityManager enma = JpaConfig.getEntityManager();
-		String jpql = "SELECT c FROM Category c WHERE c.catename like :catname"; //entity
+		String jpql = "SELECT v FROM Video v WHERE v.videoname like :videoname"; //entity
 		try {
-			TypedQuery<Category> query = enma.createQuery(jpql, Category.class);
-			query.setParameter("catename","%" + catname + "%");
-			Category category = query.getSingleResult();
-			if (category == null) {
-				throw new Exception ("Category Name da ton tai");
+			TypedQuery<Video> query = enma.createQuery(jpql, Video.class);
+			query.setParameter("videoname","%" + videoname + "%");
+			Video video = query.getSingleResult();
+			if (video == null) {
+				throw new Exception ("Video Name da ton tai");
 			}
-			return category;
+			return video;
 		}finally {
 			enma.close();
-		}
-		
+		}		
 	}
 	
 	@Override
-	public List<Category>findAll(int page, int pagesize){
+	public List<Video>findAll(int page, int pagesize){
 		EntityManager enma = JpaConfig.getEntityManager();
-		TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
+		TypedQuery<Video> query = enma.createNamedQuery("Video.findAll", Video.class);
 		query.setFirstResult(page * pagesize);
 		query.setMaxResults(pagesize);
 		return query.getResultList();
@@ -132,9 +128,9 @@ public class CategoryDao implements ICategoryDao{
 	@Override
 	public int count(){
 		EntityManager enma = JpaConfig.getEntityManager();
-		String jpql = "SELECT count(c) FROM Category c";
+		String jpql = "SELECT video(v) FROM Video v";
 		Query query =  enma.createQuery(jpql);
 		return ((Long)query.getSingleResult()).intValue();
-	}	
+	}
 
 }

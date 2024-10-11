@@ -70,7 +70,6 @@ public class CategoryController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		String url = req.getRequestURI();
@@ -94,7 +93,7 @@ public class CategoryController extends HttpServlet {
 			try {
 				Part part = req.getPart("images");
 				if (part.getSize() > 0) {
-				String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+					String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
 
 					// doi ten
 					int index = filename.lastIndexOf(".");
@@ -118,33 +117,33 @@ public class CategoryController extends HttpServlet {
 			cateService.insert(category);
 			resp.sendRedirect(req.getContextPath() + "/admin/categories");
 
-		}else if(url.contains("/admin/category/update"))
+		} else if (url.contains("/admin/category/update"))
 
-	{
+		{
 
-		int categoryid = Integer.parseInt(req.getParameter("categoryid"));
-		String categoryname = req.getParameter("categoryname");
-		int status = Integer.parseInt(req.getParameter("status"));
+			int categoryid = Integer.parseInt(req.getParameter("categoryid"));
+			String categoryname = req.getParameter("categoryname");
+			int status = Integer.parseInt(req.getParameter("status"));
 
-		Category category = new Category();
-		category.setCategoryid(categoryid);
-		category.setCategoryname(categoryname);
-		category.setStatus(status);
+			Category category = new Category();
+			category.setCategoryid(categoryid);
+			category.setCategoryname(categoryname);
+			category.setStatus(status);
 
-		// luu hinh cu
-		Category cateold = cateService.findById(categoryid);
-		String fileold = cateold.getImages();
+			// luu hinh cu
+			Category cateold = cateService.findById(categoryid);
+			String fileold = cateold.getImages();
 
-		// xu ly images
-		String fname = "";
-		String uploadPath = UPLOAD_DIRECTORY;
-		File uploadDir = new File(uploadPath);
+			// xu ly images
+			String fname = "";
+			String uploadPath = UPLOAD_DIRECTORY;
+			File uploadDir = new File(uploadPath);
 
-		if (uploadDir.exists()) {
-			uploadDir.mkdir();
-		}
-		try {
-			Part part = req.getPart("images");
+			if (uploadDir.exists()) {
+				uploadDir.mkdir();
+			}
+			try {
+				Part part = req.getPart("images");
 
 				if (part.getSize() > 0) {
 
@@ -152,32 +151,32 @@ public class CategoryController extends HttpServlet {
 						deleteFile(uploadPath + "\\" + fileold);
 					}
 
-				String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+					String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
 
-				// doi ten
-				int index = filename.lastIndexOf(".");
-				String ext = filename.substring(index + 1);
-				fname = System.currentTimeMillis() + "." + ext;
+					// doi ten
+					int index = filename.lastIndexOf(".");
+					String ext = filename.substring(index + 1);
+					fname = System.currentTimeMillis() + "." + ext;
 
-				// up load file
-				part.write(uploadPath + "/" + fname);
+					// up load file
+					part.write(uploadPath + "/" + fname);
 
-				// ghi ten file vao data
-				category.setImages(fname);
+					// ghi ten file vao data
+					category.setImages(fname);
 
-			} else {
+				} else {
 
-				category.setImages(fileold);
+					category.setImages(fileold);
+				}
+			} catch (Exception e) {
+
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
 
-			e.printStackTrace();
+			cateService.update(category);
+			resp.sendRedirect(req.getContextPath() + "/admin/categories");
+
 		}
-
-		cateService.update(category);
-		resp.sendRedirect(req.getContextPath() + "/admin/categories");
-
-	}
 	}
 
 	public static void deleteFile(String filePath) throws IOException {
